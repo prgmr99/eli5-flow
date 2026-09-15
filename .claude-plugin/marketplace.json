@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "eli5-flow",
+  "description": "Cause-and-effect ELI5 explainers for Claude Code",
+  "owner": {
+    "name": "prgmr99"
+  },
+  "plugins": [
+    {
+      "name": "eli5-flow",
+      "description": "Explain how anything works like I'm 5, built around a clear cause-and-effect chain. Use /eli5-flow <topic>.",
+      "version": "0.1.0",
+      "source": "./",
+      "category": "learning",
+      "homepage": "https://github.com/prgmr99/eli5-flow"
+    }
+  ]
+}

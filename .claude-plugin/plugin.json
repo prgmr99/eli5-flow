@@ -1,0 +1,12 @@
+{
+  "name": "eli5-flow",
+  "version": "0.1.0",
+  "description": "Explain how anything works like I'm 5, built around a clear cause-and-effect chain: a picture-first HTML explainer with labeled arrows, what-if breaks, and common mix-ups. Use /eli5-flow <topic>.",
+  "author": {
+    "name": "prgmr99"
+  },
+  "homepage": "https://github.com/prgmr99/eli5-flow",
+  "repository": "https://github.com/prgmr99/eli5-flow",
+  "license": "MIT",
+  "keywords": ["explain", "eli5", "causality", "cause-and-effect", "flow", "learning", "html"]
+}
