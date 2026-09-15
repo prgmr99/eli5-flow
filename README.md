@@ -5,9 +5,8 @@
 A [Claude Code](https://claude.com/claude-code) plugin that turns any "how does this work?" or "why does this happen?" question into a picture-first HTML explainer. Instead of a loose collection of analogies, it walks through the topic as **one clear chain**: *this happens, so that happens, so that happens.*
 
 ```
-/eli5-flow why does bread rise
-/eli5-flow what happens after I type a URL and press Enter
-/eli5-flow why do we get static shocks in winter
+/eli5-flow explain what happens when a user enters a URL and a web page loads
+/eli5-flow explain how rising interest rates relate to prices
 ```
 
 ## Why another ELI5?
@@ -37,15 +36,17 @@ Each explainer is a single HTML page with six sections:
 5. **Easy to mix up** — common misunderstandings: "Looks like ___, but really ___."
 6. **Say it in one breath** — the whole chain in one line: "A, so B, so C, so D."
 
-Example chain for *why bread rises*:
+Example chain for *how rising interest rates relate to prices*:
 
 ```
-[yeast + sugar in dough] --needs: warmth--> [yeast eats sugar]
-  --leads to: it breathes out gas--> [tiny gas bubbles]
-  --because: stretchy dough traps them--> [bubbles grow]
-  --so--> [dough puffs up] --trigger: oven heat--> [bubbles set in place = fluffy bread]
+[central bank raises rates] --trigger: banks follow its lead--> [loans get pricier]
+  --leads to: borrowing costs more, saving pays more--> [less money to spend]
+  --leads to: lighter wallets--> [people buy less]
+  --leads to: unsold goods cost shops money--> [shops raise prices more slowly]
+  --so--> [inflation cools down]
 
-Snap a link: no warmth → yeast stays asleep → no gas → flat, heavy bread.
+Snap a link: if costs keep rising and shops must raise prices anyway
+  → price tags keep climbing even with fewer customers → inflation doesn't cool.
 ```
 
 The explainer is written in whatever language you ask in.
