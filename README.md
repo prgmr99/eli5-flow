@@ -95,7 +95,8 @@ eli5-flow/
 │   └── check-chain.test.ts
 └── skills/
     └── eli5-flow/
-        └── SKILL.md        # the skill itself
+        ├── SKILL.md        # the skill: chain rules, page structure, chain data
+        └── LAYOUT.md       # full-width layout, spacing and connector rules
 ```
 
 ## Development
