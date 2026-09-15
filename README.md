@@ -90,6 +90,9 @@ eli5-flow/
 ├── .claude-plugin/
 │   ├── plugin.json         # plugin metadata
 │   └── marketplace.json    # makes this repo installable as a marketplace
+├── scripts/
+│   ├── check-chain.ts      # structural checker for generated explainers
+│   └── check-chain.test.ts
 └── skills/
     └── eli5-flow/
         └── SKILL.md        # the skill itself
@@ -110,6 +113,25 @@ claude plugin validate --strict .claude-plugin/plugin.json
 claude plugin validate --strict .claude-plugin/marketplace.json
 claude plugin validate --strict skills
 ```
+
+### Checking an explainer
+
+Every explainer embeds its chain as JSON (`<script type="application/json" id="eli5-flow-chain">`). The checker (Node 22.18+, no dependencies) reads it and fails on structural problems:
+
+- a step with no incoming or outgoing link (a jump or a dead end)
+- an arrow without a reason or a cause kind (`trigger` / `needs` / `leads-to`)
+- a backward arrow that isn't declared as a `reinforcing` / `balancing` loop
+- a "snap a link" that names no real link, or whose ending doesn't change
+- chain data that doesn't match the text on the page
+
+```bash
+node scripts/check-chain.ts path/to/explainer.html
+node --test scripts/check-chain.test.ts
+```
+
+It checks **form, not truth**: a chain can pass and still be wrong about what causes what.
+
+### Release
 
 When releasing, bump `version` in **both** `plugin.json` and `marketplace.json`.
 

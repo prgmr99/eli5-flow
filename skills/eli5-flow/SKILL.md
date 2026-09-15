@@ -29,11 +29,11 @@ Write in the language the user is using.
 - **One step, one change.** If a card has "and" in it, split it into two cards.
 - **No jumps.** If a 5-year-old could ask "but why?" between two cards, a step is missing — add it.
 - **Keep time order.** Things that happen at the same time go side by side, not in sequence.
-- **Name the kind of cause** when it matters, with a small tag on the arrow:
+- **Name the kind of cause** on every arrow, with a small tag (translated into the page's language):
   - `trigger` — the thing that starts it
   - `needs` — a condition that must already be true
   - `leads to` — the normal mechanism
-- **Show loops as loops.** If the result feeds back into an earlier step (it keeps growing, or keeps itself in balance), draw the arrow going back and say so.
+- **Show loops as loops — only real ones.** A loop is when a later result pushes an earlier step up (`reinforcing`) or back down (`balancing`). Something that simply happens again is a repeat, not a loop — don't draw it.
 - **Correlation is not a link.** Only draw an arrow if the first thing actually causes the second.
 - 5–9 steps. If it needs more, group steps into 2–3 stages with a big label each.
 
@@ -72,19 +72,43 @@ The flow is the point, so the page is wide, not a narrow reading column.
 - Use one accent color for the main chain and a muted color for "snap a link" what-ifs.
 - No walls of text, no jargon. If a technical word is unavoidable, show it as a picture first, then name it.
 
+## Chain data (required)
+
+Embed the chain as JSON so it can be checked automatically. Every string must be copied **verbatim** from the text shown on the page.
+
+```html
+<script type="application/json" id="eli5-flow-chain">
+{
+  "bigPicture": "…",
+  "steps":  [{ "id": "s1", "text": "…" }],
+  "links":  [{ "from": "s1", "to": "s2", "kind": "trigger | needs | leads-to", "because": "…" }],
+  "loops":  [{ "from": "s6", "to": "s2", "kind": "reinforcing | balancing", "because": "…" }],
+  "snaps":  [{ "from": "s3", "to": "s4", "whatIf": "…", "ending": "…" }],
+  "mixups": [{ "looksLike": "…", "really": "…" }],
+  "oneBreath": "…"
+}
+</script>
+```
+
+- `steps` in time order; `links` only point forward; anything pointing back belongs in `loops` (use `[]` if none).
+- Every step except the first has an incoming link, and every step except the last has an outgoing one.
+- Each snap names an existing link; `ending` is the changed outcome.
+
 ## Before you output, check
 
 - [ ] Reading only the arrow labels tells the story on its own.
 - [ ] Step 1 is something a beginner already understands; the last step is the thing they asked about.
 - [ ] "Snap a link" really changes the ending — if nothing changes, that link wasn't important; pick another.
 - [ ] The one-breath sentence matches the chain exactly.
+- [ ] The chain data matches the page, word for word.
 
 ## Example chain (topic: why bread rises)
 
 ```
 [yeast + sugar in dough] --needs: warmth--> [yeast eats sugar]
   --leads to: it breathes out gas--> [tiny gas bubbles]
-  --because: stretchy dough traps them--> [bubbles grow]
-  --so--> [dough puffs up] --trigger: oven heat--> [bubbles set in place = fluffy bread]
+  --leads to: stretchy dough traps them--> [bubbles grow]
+  --leads to: more gas, more push--> [dough puffs up]
+  --trigger: oven heat--> [bubbles set in place = fluffy bread]
 Snap a link: no warmth → yeast stays asleep → no gas → flat, heavy bread.
 ```
