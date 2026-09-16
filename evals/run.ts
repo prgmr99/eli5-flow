@@ -1,5 +1,5 @@
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { checkHtml } from "../scripts/check-chain.ts";
@@ -22,19 +22,30 @@ type JobResult = Job & {
   error?: string;
 };
 
-async function generate(job: Job, model: string): Promise<Generation> {
+export type Arm = "flow" | "eli5" | "plain";
+
+const ELI5_PLUGIN_DIR = join(homedir(), ".claude/plugins/cache/claude-community/eli5/1.0.0");
+
+function armPrompt(arm: Arm, topic: string): string {
+  if (arm === "flow") return `/eli5-flow ${topic}`;
+  if (arm === "eli5") return `/eli5 ${topic}`;
+  return `Explain to someone who knows nothing about it: ${topic}. Make it a single HTML page.`;
+}
+
+async function generate(job: Job, model: string, arm: Arm): Promise<Generation> {
   // Claude Code refuses writes inside a directory loaded with --plugin-dir, so generate outside the repo.
   const workDir = mkdtempSync(join(tmpdir(), "eli5-flow-eval-"));
   const workFile = join(workDir, basename(job.html));
   const prompt =
-    `/eli5-flow ${loadReference(job.topic).prompt}\n\n` +
+    `${armPrompt(arm, loadReference(job.topic).prompt)}\n\n` +
     `(Test run: do not publish an artifact. Only save the complete HTML page to ./${basename(job.html)}. Reply with one line when done.)`;
+  const pluginDir = arm === "flow" ? PLUGIN_DIR : arm === "eli5" ? ELI5_PLUGIN_DIR : null;
 
   const { code, stdout, stderr } = await runClaude(
     [
       "-p",
       "--model", model,
-      "--plugin-dir", PLUGIN_DIR,
+      ...(pluginDir ? ["--plugin-dir", pluginDir] : []),
       "--setting-sources", "",
       "--strict-mcp-config",
       "--no-session-persistence",
@@ -75,11 +86,11 @@ async function generate(job: Job, model: string): Promise<Generation> {
   };
 }
 
-async function runJob(job: Job, model: string, judgeModel: string): Promise<JobResult> {
-  let generation = await generate(job, model);
+async function runJob(job: Job, model: string, judgeModel: string, arm: Arm): Promise<JobResult> {
+  let generation = await generate(job, model, arm);
   if (!generation.ok) {
     console.log(`↻ ${job.topic}#${job.run}  retrying after ${generation.error}`);
-    const retry = await generate(job, model);
+    const retry = await generate(job, model, arm);
     generation = { ...retry, costUsd: retry.costUsd + generation.costUsd };
   }
   if (!generation.ok) return { ...job, generation, error: generation.error };
@@ -160,6 +171,7 @@ async function main(argv: string[]) {
   const runs = Number(flag("--runs", "3"));
   const concurrency = Number(flag("--concurrency", "3"));
   const only = flag("--topics", "");
+  const arm = flag("--arm", "flow") as Arm;
 
   const topics = readdirSync(join(EVALS_DIR, "references"))
     .map((f) => f.replace(/\.json$/, ""))
@@ -181,9 +193,9 @@ async function main(argv: string[]) {
         })),
       );
 
-  console.log(`${jobs.length} runs · model ${model} · judge ${judgeModel} · concurrency ${concurrency}\n→ ${outDir}`);
+  console.log(`${jobs.length} runs · arm ${arm} · model ${model} · judge ${judgeModel} · concurrency ${concurrency}\n→ ${outDir}`);
   const fresh = await pool(jobs, concurrency, async (job) => {
-    const result = await runJob(job, model, judgeModel);
+    const result = await runJob(job, model, judgeModel, arm);
     const s = result.scores;
     console.log(
       `${result.scores?.pass ? "✔" : "✖"} ${job.topic}#${job.run}` +
@@ -199,8 +211,8 @@ async function main(argv: string[]) {
     ? previous.map((r) => fresh.find((f) => key(f) === key(r)) ?? r)
     : fresh;
   const summary = summarize(results);
-  writeFileSync(join(outDir, "results.json"), JSON.stringify({ model, judgeModel, runs, results }, null, 2));
-  writeFileSync(join(outDir, "summary.md"), `# eli5-flow eval\n\nmodel \`${model}\` · judge \`${judgeModel}\` · ${runs} runs per topic\n\n${summary}`);
+  writeFileSync(join(outDir, "results.json"), JSON.stringify({ arm, model, judgeModel, runs, results }, null, 2));
+  writeFileSync(join(outDir, "summary.md"), `# eli5-flow eval\n\narm \`${arm}\` · model \`${model}\` · judge \`${judgeModel}\` · ${runs} runs per topic\n\n${summary}`);
   console.log(`\n${summary}`);
 }
 
