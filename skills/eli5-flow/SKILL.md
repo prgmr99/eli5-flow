@@ -48,7 +48,8 @@ Everything else is identical: the same chain rules, the same snap-a-link, the sa
    - one short line: *what happens*
    - an arrow to the next card, labeled with *why it leads there* ("because…", "so…")
 4. **Snap a link** — pick the 1–2 most important arrows. For each: "What if step N didn't happen?" and show, in pictures, where the chain stops and what changes at the end. The changed ending must be what really happens (the real error message, the real outcome), not a guess.
-5. **Easy to mix up** — 1–3 common misunderstandings, each as "Looks like ___, but really ___."
+   Only snap a link that can really be absent. If the step still happens and only turns out differently — a server answering "404" is still an answer — the chain isn't broken; that belongs in "Easy to mix up" instead.
+5. **Easy to mix up** — 1–3 common misunderstandings, each as "Looks like ___, but really ___." This is where precision lives: when a simplification on the chain could leave someone with a false picture, put the accurate version here rather than crowding the arrow.
 6. **Say it in one breath** — the whole chain as one line: "A, so B, so C, so D."
 
 ## Rules for the chain
@@ -66,6 +67,7 @@ Everything else is identical: the same chain rules, the same snap-a-link, the sa
   - `leads to` — the normal mechanism
 - **Show loops as loops — only real ones.** A loop is when a later result pushes an earlier step up (`reinforcing`) or back down (`balancing`). Something that simply happens again is a repeat, not a loop — don't draw it.
 - **Correlation is not a link.** Only draw an arrow if the first thing actually causes the second.
+- **Never invent a mechanism.** Write each reason only at the level you are sure is true. "Banks follow the central bank's rate" is right; "banks borrow at that rate and pass it on" sounds more expert and is wrong. A true, wider reason beats a specific, shaky one.
 - 5–9 steps. More than 5 → group them into 2–3 stages (at most 5 steps each) with a big label each.
 
 ## Chain data (required)
@@ -96,7 +98,9 @@ Embed the chain as JSON so it can be checked automatically. Every string must be
 - [ ] Reading only the arrow labels tells the story on its own.
 - [ ] Step 1 is something a beginner already understands; the last step is the thing they asked about.
 - [ ] "Snap a link" really changes the ending — if nothing changes, that link wasn't important; pick another. The new ending is what really happens.
+- [ ] In every snap, the snapped step truly doesn't happen — no card under it still doing its job with a different result.
 - [ ] No *stops / never / always / every time / all* that isn't literally true.
+- [ ] Would someone who knows the subject object to any arrow's reason? Then say less on the arrow, and put the accurate version in "Easy to mix up".
 - [ ] Reading only the cards, a beginner gets the whole story in one pass; no detail you added makes that harder or the page busier.
 - [ ] The one-breath sentence matches the chain exactly.
 - [ ] The chain data matches the page, word for word.
