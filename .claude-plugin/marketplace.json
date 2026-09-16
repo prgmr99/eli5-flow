@@ -9,7 +9,7 @@
     {
       "name": "eli5-flow",
       "description": "Explain how anything works like I'm 5, built around a clear cause-and-effect chain. Use /eli5-flow <topic>.",
-      "version": "0.2.0",
+      "version": "1.0.0",
       "source": "./",
       "category": "learning",
       "homepage": "https://github.com/prgmr99/eli5-flow"

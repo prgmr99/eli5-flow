@@ -1,6 +1,6 @@
 {
   "name": "eli5-flow",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Explain how anything works like I'm 5, built around a clear cause-and-effect chain: a picture-first HTML explainer with labeled arrows, what-if breaks, and common mix-ups. Use /eli5-flow <topic>.",
   "author": {
     "name": "prgmr99"
