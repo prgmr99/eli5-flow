@@ -5,6 +5,7 @@ import { checkHtml, type Issue } from "./check-chain.ts";
 type Data = Record<string, any>;
 
 const validChain = (): Data => ({
+  audience: "beginner",
   bigPicture: "When yeast is warm, in the end bread gets fluffy.",
   steps: [
     { id: "s1", text: "Yeast sits in sugary dough" },
@@ -30,7 +31,7 @@ function strings(value: unknown): string[] {
   if (Array.isArray(value)) return value.flatMap(strings);
   if (value && typeof value === "object") {
     return Object.entries(value)
-      .filter(([key]) => !["id", "from", "to", "kind"].includes(key))
+      .filter(([key]) => !["id", "from", "to", "kind", "audience"].includes(key))
       .flatMap(([, v]) => strings(v));
   }
   return [];
@@ -60,6 +61,18 @@ test("a well-formed chain passes with no errors or warnings", () => {
   const { issues, counts } = checkHtml(page(validChain()));
   assert.deepEqual(issues, []);
   assert.equal(counts?.steps, 5);
+});
+
+test("an unknown audience", () => {
+  const data = validChain();
+  data.audience = "manager";
+  expectError(page(data), /audience: must be one of/);
+});
+
+test("a dev-audience chain passes", () => {
+  const data = validChain();
+  data.audience = "dev";
+  assert.deepEqual(errors(checkHtml(page(data)).issues), []);
 });
 
 test("missing chain data", () => {

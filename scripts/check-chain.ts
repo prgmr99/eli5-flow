@@ -13,6 +13,7 @@ type Link = { from: string; to: string; kind: string; because: string };
 type Snap = { from: string; to: string; whatIf: string; ending: string };
 type Mixup = { looksLike: string; really: string };
 type Chain = {
+  audience: string;
   bigPicture: string;
   steps: Step[];
   links: Link[];
@@ -22,6 +23,7 @@ type Chain = {
   oneBreath: string;
 };
 
+const AUDIENCES = ["beginner", "dev"];
 const LINK_KINDS = ["trigger", "needs", "leads-to"];
 const LOOP_KINDS = ["reinforcing", "balancing"];
 const MAX_WORDS_PER_STEP = 12;
@@ -90,6 +92,7 @@ export function checkHtml(html: string): CheckResult {
     return [];
   };
 
+  if (!AUDIENCES.includes(data.audience as string)) error("audience", `must be one of ${AUDIENCES.join(", ")}`);
   if (!isText(data.bigPicture)) error("bigPicture", "missing");
   if (!isText(data.oneBreath)) error("oneBreath", "missing");
 

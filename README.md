@@ -9,6 +9,22 @@ A [Claude Code](https://claude.com/claude-code) plugin that turns any "how does 
 /eli5-flow explain how rising interest rates relate to prices
 ```
 
+### Explaining it to developers
+
+By default the explainer assumes you know nothing about the topic. Add `--for dev` — or just ask for it in words, in any language — and it keeps the same chain, the same layout and the same number of cards, but uses the real terms instead of analogies:
+
+```
+/eli5-flow --for dev what happens in React when state changes and the screen updates
+/eli5-flow explain the browser event loop for engineers
+```
+
+| | default | `--for dev` |
+|---|---|---|
+| Words | everyday words, no jargon | DNS lookup, TCP handshake, reconciliation, commit |
+| Pictures | a phone book, a letter | browser, server, DOM |
+| Depth | why it happens | why it happens, and what actually does it |
+| Easy to mix up | what a beginner gets wrong | what developers actually get wrong |
+
 ## Why another ELI5?
 
 Simple explanations often fail in the same place: the steps are there, but the **connections between them** are missing. You understand each picture, yet you can't say *why* one leads to the next.

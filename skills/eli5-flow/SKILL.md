@@ -1,6 +1,6 @@
 ---
 name: eli5-flow
-description: Explain how something works like I'm 5, focused on cause and effect — a picture-first HTML explainer that walks through the chain of "this happens, so that happens" step by step. Use when the user types /eli5-flow <topic>, or asks why something happens, what leads to what, or wants the step-by-step flow of a process explained simply.
+description: Explain how something works, focused on cause and effect — a picture-first HTML explainer that walks through the chain of "this happens, so that happens" step by step, for a complete beginner or, on request, for developers. Use when the user types /eli5-flow <topic>, or asks why something happens, what leads to what, or wants the step-by-step flow of a process explained — including when they ask for it "for developers", "for engineers", or with --for dev.
 ---
 
 # eli5-flow
@@ -10,6 +10,21 @@ Explain the topic to someone who knows nothing about it, as a HTML artifact with
 Topic: $ARGUMENTS
 
 Write in the language the user is using.
+
+## Who it's for
+
+Default: someone who knows nothing about the topic.
+
+Switch to **dev** when the request asks for it — `--for dev`, `--for developers`, or plain words in any language ("for engineers", "개발자에게 설명해줘"). Take that part out of the topic before you explain it.
+
+| | default | dev |
+|---|---|---|
+| Words | everyday words, no jargon | the real terms (DNS lookup, TCP handshake, reconciliation, commit) |
+| Pictures | everyday analogies (a phone book, a letter) | the real parts (browser, server, DOM, the event loop) |
+| Depth | why it happens | why it happens, and what actually does it |
+| Easy to mix up | what a beginner gets wrong | what developers actually get wrong |
+
+Everything else is identical: the same chain rules, the same snap-a-link, the same layout, the same number of cards. Only the words and the depth change — dev pages are not longer or busier.
 
 ## What matters most, in order
 
@@ -60,6 +75,7 @@ Embed the chain as JSON so it can be checked automatically. Every string must be
 ```html
 <script type="application/json" id="eli5-flow-chain">
 {
+  "audience": "beginner | dev",
   "bigPicture": "…",
   "steps":  [{ "id": "s1", "text": "…" }],
   "links":  [{ "from": "s1", "to": "s2", "kind": "trigger | needs | leads-to", "because": "…" }],
