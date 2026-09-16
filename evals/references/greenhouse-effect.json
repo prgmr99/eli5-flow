@@ -1,0 +1,23 @@
+{
+  "id": "greenhouse-effect",
+  "prompt": "explain how greenhouse gases warm the Earth",
+  "keyLinks": [
+    { "id": "K1", "required": true, "cause": "Sunlight (mostly visible light) reaches Earth", "effect": "It passes through the atmosphere and warms the surface", "mechanism": "The atmosphere is largely transparent to incoming sunlight" },
+    { "id": "K2", "required": true, "cause": "The surface is warm", "effect": "The surface gives off heat as infrared radiation", "mechanism": "Every warm object radiates energy; Earth's temperature means infrared" },
+    { "id": "K3", "required": true, "cause": "Infrared travels up through the air", "effect": "Greenhouse gases (CO2, water vapour, methane) absorb it", "mechanism": "These molecules absorb infrared wavelengths that other air molecules let through" },
+    { "id": "K4", "required": true, "cause": "Greenhouse gases absorb infrared", "effect": "They re-emit it in all directions, including back down, so less heat escapes to space", "mechanism": "Absorbed energy is re-radiated, part of it toward the surface" },
+    { "id": "K5", "required": true, "cause": "More greenhouse gas means less heat escapes", "effect": "Earth warms until it again sends out as much energy as it receives, at a higher temperature", "mechanism": "Energy balance: outgoing must match incoming" },
+    { "id": "K6", "required": false, "cause": "Warming", "effect": "More water vapour or less ice, which adds more warming (reinforcing loop)", "mechanism": "Warmer air holds more water vapour; less ice reflects less sunlight" }
+  ],
+  "knownErrors": [
+    { "id": "E1", "claim": "The ozone hole lets in extra heat and is the cause of global warming", "why": "Ozone depletion and the greenhouse effect are different problems" },
+    { "id": "E2", "claim": "Greenhouse gases trap the incoming sunlight", "why": "They mainly absorb the outgoing infrared from the surface, not incoming visible light" },
+    { "id": "E3", "claim": "Heat bounces off a solid layer or glass-like ceiling in the sky", "why": "Gases absorb and re-emit infrared; there is no reflecting layer (a blanket analogy is fine)" },
+    { "id": "E4", "claim": "Without greenhouse gases Earth would have about the same temperature", "why": "The natural greenhouse effect keeps Earth roughly 30 °C warmer than it would otherwise be" }
+  ],
+  "acceptableSimplifications": [
+    "A blanket analogy for the atmosphere",
+    "Saying \"heat\" instead of \"infrared radiation\"",
+    "Omitting the exact gases other than CO2"
+  ]
+}

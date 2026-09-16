@@ -1,0 +1,24 @@
+{
+  "id": "rates-to-inflation",
+  "prompt": "explain how rising interest rates relate to prices",
+  "keyLinks": [
+    { "id": "K1", "required": true, "cause": "The central bank raises its policy rate", "effect": "Interest rates on loans (and savings) across the economy rise", "mechanism": "The policy rate steers the short-term rates banks lend and borrow at, which feed into loan and deposit rates" },
+    { "id": "K2", "required": true, "cause": "Borrowing costs more and saving pays more", "effect": "Households and businesses borrow and spend or invest less", "mechanism": "Loan-financed purchases get more expensive and holding money becomes more attractive" },
+    { "id": "K3", "required": true, "cause": "People and businesses spend less", "effect": "Demand for goods and services falls", "mechanism": "Total spending in the economy is demand" },
+    { "id": "K4", "required": true, "cause": "Demand is weaker", "effect": "Businesses raise prices less (and wage growth slows)", "mechanism": "With fewer buyers, firms can't push prices up as easily without losing sales" },
+    { "id": "K5", "required": true, "cause": "Price increases slow down across many businesses", "effect": "Inflation cools: prices keep rising but more slowly, usually after a lag of months to years", "mechanism": "Inflation is the rate at which the overall price level rises" },
+    { "id": "K6", "required": false, "cause": "People expect the central bank to keep inflation down", "effect": "Smaller price and wage increases are set in advance", "mechanism": "Expectations feed into pricing and wage decisions" },
+    { "id": "K7", "required": false, "cause": "Inflation cools", "effect": "The central bank stops raising or starts lowering rates (balancing loop)", "mechanism": "The central bank adjusts rates to steer inflation toward its target" }
+  ],
+  "knownErrors": [
+    { "id": "E1", "claim": "The normal outcome is that prices fall / the price level goes down", "why": "The usual effect is slower price growth (lower inflation), not falling prices" },
+    { "id": "E2", "claim": "Banks get (all) their money from the central bank at the policy rate, and that is the main reason loan rates rise", "why": "Misleading: the policy rate steers market interest rates; most bank funding is deposits and market borrowing" },
+    { "id": "E3", "claim": "The effect on prices is immediate", "why": "Monetary policy works with long and variable lags" },
+    { "id": "E4", "claim": "Higher rates mainly push prices up because businesses pass on higher loan costs", "why": "A cost channel exists but the main effect of higher rates is to cool demand and inflation" }
+  ],
+  "acceptableSimplifications": [
+    "Talking about \"the bank\" or \"loans\" generically instead of market rates",
+    "Omitting exchange rates, asset prices and the expectations channel",
+    "Describing the outcome as \"prices stop climbing so fast\""
+  ]
+}

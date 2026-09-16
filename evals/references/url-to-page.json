@@ -1,0 +1,23 @@
+{
+  "id": "url-to-page",
+  "prompt": "explain what happens when a user enters a URL and a web page loads",
+  "keyLinks": [
+    { "id": "K1", "required": true, "cause": "The user enters a URL", "effect": "The browser looks up the server's IP address (DNS)", "mechanism": "Networks deliver data to numeric IP addresses, not to names, so the name must be translated first" },
+    { "id": "K2", "required": true, "cause": "The IP address is known", "effect": "The browser opens a connection to that server (TCP, plus a TLS handshake for HTTPS)", "mechanism": "A request can only be sent over an established connection" },
+    { "id": "K3", "required": true, "cause": "The connection is open", "effect": "The browser sends an HTTP request for the page", "mechanism": "The request says which page is wanted" },
+    { "id": "K4", "required": true, "cause": "The server receives the request", "effect": "The server sends back a response containing the HTML", "mechanism": "The server finds or builds the page and replies with a status and body" },
+    { "id": "K5", "required": false, "cause": "The browser reads the HTML", "effect": "The browser requests further resources (CSS, JavaScript, images)", "mechanism": "The HTML references other files that are fetched separately" },
+    { "id": "K6", "required": true, "cause": "The browser has the HTML (and CSS)", "effect": "The browser builds and paints the page on screen", "mechanism": "It parses the markup, works out layout and styles, then draws pixels" }
+  ],
+  "knownErrors": [
+    { "id": "E1", "claim": "The name/URL goes straight to the server with no address lookup", "why": "Without resolving the name to an IP address the browser cannot reach the server" },
+    { "id": "E2", "claim": "\"Page not found\" (404) happens because the server did not respond", "why": "A 404 is itself a response from a reachable server; no response gives a timeout or \"can't be reached\"" },
+    { "id": "E3", "claim": "The server sends a finished picture/screenshot of the page", "why": "The server sends HTML and other files; the browser builds and draws the page itself" },
+    { "id": "E4", "claim": "\"Site can't be reached\" is caused by a wrong page path", "why": "That error comes from failing to resolve or connect; a wrong path on a reachable server gives a 404" }
+  ],
+  "acceptableSimplifications": [
+    "Calling DNS a phone book or address book",
+    "Omitting caching, CDNs, redirects and TCP/TLS details",
+    "Merging parsing, layout and painting into one step"
+  ]
+}

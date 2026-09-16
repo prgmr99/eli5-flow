@@ -144,13 +144,15 @@ test("page text may be split across tags and lines", () => {
   assert.deepEqual(errors(checkHtml(html).issues), []);
 });
 
-test("warns on long or double steps and on executable scripts", () => {
+test("warns on long steps, long reasons, double steps and executable scripts", () => {
   const data = validChain();
   data.steps[3].text = "Bubbles grow and the dough gets bigger and bigger and softer every single minute";
+  data.links[2].because = "because the stretchy gluten net in the dough holds on to every little bubble of gas for a long time";
   const { issues } = checkHtml(page(data, { script: "<script>draw()</script>" }));
   assert.deepEqual(errors(issues), []);
   const messages = warnings(issues).map((i) => i.message).join("\n");
-  assert.match(messages, /words \(aim for/);
+  assert.match(messages, /^\d+ words \(aim for/m);
+  assert.match(messages, /reason has \d+ words/);
   assert.match(messages, /may be two changes/);
   assert.match(messages, /executable <script>/);
 });

@@ -1,0 +1,25 @@
+{
+  "id": "react-rerender",
+  "prompt": "explain what happens in React when state changes and the screen updates",
+  "keyLinks": [
+    { "id": "K1", "required": true, "cause": "The state setter (e.g. setState) is called", "effect": "React schedules a re-render of that component", "mechanism": "Calling the setter tells React state changed; the current render's variables are not changed in place" },
+    { "id": "K2", "required": true, "cause": "React re-renders the component", "effect": "The component function runs again with the new state and returns new JSX", "mechanism": "Rendering is calling the component to describe what the UI should look like now" },
+    { "id": "K3", "required": false, "cause": "A parent re-renders", "effect": "Its children re-render too by default", "mechanism": "Children are part of the parent's returned output unless memoized" },
+    { "id": "K4", "required": true, "cause": "React has a new description of the UI", "effect": "It compares it with the previous one (reconciliation)", "mechanism": "Diffing finds what actually changed" },
+    { "id": "K5", "required": true, "cause": "Differences are found", "effect": "React updates only those parts of the real DOM (commit)", "mechanism": "Changing only what differs avoids rebuilding the page" },
+    { "id": "K6", "required": true, "cause": "The DOM has changed", "effect": "The browser paints the update and the screen changes", "mechanism": "The browser redraws changed parts of the page" },
+    { "id": "K7", "required": false, "cause": "The update is committed", "effect": "Effects (useEffect) run afterwards", "mechanism": "Effects run after React has updated the DOM" }
+  ],
+  "knownErrors": [
+    { "id": "E1", "claim": "Changing state directly (e.g. array.push or obj.x = 1) triggers a re-render", "why": "Only calling the state setter with a new value schedules a re-render" },
+    { "id": "E2", "claim": "State updates immediately, so the next line of code sees the new value", "why": "The new value is available on the next render" },
+    { "id": "E3", "claim": "React re-renders by replacing the whole DOM / whole page", "why": "React commits only the differences" },
+    { "id": "E4", "claim": "A child component only re-renders when its props change", "why": "By default children re-render whenever their parent re-renders" },
+    { "id": "E5", "claim": "useEffect runs during rendering or before the screen updates", "why": "Effects run after the commit" }
+  ],
+  "acceptableSimplifications": [
+    "Calling the render output a \"drawing\" or \"plan\" of the screen",
+    "Merging reconciliation and commit into one step",
+    "Omitting batching, concurrent rendering and memoization"
+  ]
+}

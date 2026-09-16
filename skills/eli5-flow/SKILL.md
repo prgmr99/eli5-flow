@@ -11,6 +11,12 @@ Topic: $ARGUMENTS
 
 Write in the language the user is using.
 
+## What matters most, in order
+
+1. **The main flow is clear at a glance.** Reading only the cards, left to right, once, a beginner gets the whole story.
+2. **Every link is true.**
+3. **Extra detail** — only where it doesn't slow down #1 or make the page busier. When in doubt, leave it out.
+
 ## Workflow
 
 1. Work out the chain first, following **Rules for the chain**.
@@ -26,15 +32,18 @@ Write in the language the user is using.
    - a big picture of what's happening
    - one short line: *what happens*
    - an arrow to the next card, labeled with *why it leads there* ("because…", "so…")
-4. **Snap a link** — pick the 1–2 most important arrows. For each: "What if step N didn't happen?" and show, in pictures, where the chain stops and what changes at the end.
+4. **Snap a link** — pick the 1–2 most important arrows. For each: "What if step N didn't happen?" and show, in pictures, where the chain stops and what changes at the end. The changed ending must be what really happens (the real error message, the real outcome), not a guess.
 5. **Easy to mix up** — 1–3 common misunderstandings, each as "Looks like ___, but really ___."
 6. **Say it in one breath** — the whole chain as one line: "A, so B, so C, so D."
 
 ## Rules for the chain
 
-- **Every arrow carries a reason.** An unlabeled arrow is not allowed.
+- **Every arrow carries a short reason** — about 10 words or fewer. An unlabeled arrow is not allowed.
 - **One step, one change.** If a card has "and" in it, split it into two cards.
 - **No jumps.** If a 5-year-old could ask "but why?" between two cards, a step is missing — add it.
+- **Close gaps without adding clutter.** At each arrow, think of the obvious shortcut a beginner would suggest ("just sell the loans", "just send the name"). If the page doesn't say why it fails, put the answer into that arrow's reason in a few words. Add a new card only when the answer is an event the ending depends on — never for background detail.
+- **Simple words, true amounts.** Make the words easy, never the quantities. Don't write *stops*, *never*, *always*, *every time* or *all* unless it is literally true — say *less*, *slower*, *most*, *usually*.
+- **Conditions aren't causes.** A background fact that lets something happen but doesn't make it happen (only a little cash in the vault, dry wood) never gets an arrow into the event that starts things. Mention it in the reason on the arrow where it matters, or in "Who's involved" — not as an extra card.
 - **Keep time order.** Things that happen at the same time go side by side, not in sequence.
 - **Name the kind of cause** on every arrow, with a small tag (translated into the page's language):
   - `trigger` — the thing that starts it
@@ -70,7 +79,9 @@ Embed the chain as JSON so it can be checked automatically. Every string must be
 
 - [ ] Reading only the arrow labels tells the story on its own.
 - [ ] Step 1 is something a beginner already understands; the last step is the thing they asked about.
-- [ ] "Snap a link" really changes the ending — if nothing changes, that link wasn't important; pick another.
+- [ ] "Snap a link" really changes the ending — if nothing changes, that link wasn't important; pick another. The new ending is what really happens.
+- [ ] No *stops / never / always / every time / all* that isn't literally true.
+- [ ] Reading only the cards, a beginner gets the whole story in one pass; no detail you added makes that harder or the page busier.
 - [ ] The one-breath sentence matches the chain exactly.
 - [ ] The chain data matches the page, word for word.
 - [ ] At ~1000px and wider the whole chain is visible without scrolling; no card is narrower than 120px; nothing is clipped.

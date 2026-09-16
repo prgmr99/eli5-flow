@@ -25,11 +25,13 @@ type Chain = {
 const LINK_KINDS = ["trigger", "needs", "leads-to"];
 const LOOP_KINDS = ["reinforcing", "balancing"];
 const MAX_WORDS_PER_STEP = 12;
+const MAX_WORDS_PER_REASON = 14;
 
 const CHAIN_SCRIPT = /<script\b([^>]*\bid=["']eli5-flow-chain["'][^>]*)>([\s\S]*?)<\/script>/i;
 
 const isText = (v: unknown): v is string => typeof v === "string" && v.trim() !== "";
 const squash = (s: string) => s.replace(/\s+/g, "");
+export const wordCount = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
 
 export function visibleText(html: string): string {
   return html
@@ -43,6 +45,16 @@ export function visibleText(html: string): string {
     .replace(/&quot;/g, '"')
     .replace(/&#39;|&apos;/g, "'")
     .replace(/&amp;/g, "&");
+}
+
+export function extractChainJson(html: string): unknown {
+  const match = CHAIN_SCRIPT.exec(html);
+  if (!match) return null;
+  try {
+    return JSON.parse(match[2]);
+  } catch {
+    return null;
+  }
 }
 
 export function checkHtml(html: string): CheckResult {
@@ -96,7 +108,7 @@ export function checkHtml(html: string): CheckResult {
     if (index.has(step.id)) error(where, `duplicate id "${step.id}"`);
     index.set(step.id, i);
     if (!isText(step.text)) return error(step.id, "missing text");
-    const words = step.text.trim().split(/\s+/).length;
+    const words = wordCount(step.text);
     if (words > MAX_WORDS_PER_STEP) warn(step.id, `${words} words (aim for ≤ ${MAX_WORDS_PER_STEP})`);
     if (/\band\b|그리고/i.test(step.text)) warn(step.id, `"${step.text}" may be two changes in one step`);
   });
@@ -119,6 +131,9 @@ export function checkHtml(html: string): CheckResult {
     seen.add(edgeName(link));
     if (!LINK_KINDS.includes(link?.kind)) error(where, `kind must be one of ${LINK_KINDS.join(", ")}`);
     if (!isText(link?.because)) error(where, 'missing "because" — every arrow needs a reason');
+    else if (wordCount(link.because) > MAX_WORDS_PER_REASON) {
+      warn(where, `reason has ${wordCount(link.because)} words (aim for ≤ ${MAX_WORDS_PER_REASON})`);
+    }
     const ends = resolve(link, where);
     if (!ends) continue;
     if (ends.to <= ends.from) {

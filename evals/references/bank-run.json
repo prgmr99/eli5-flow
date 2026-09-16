@@ -1,0 +1,23 @@
+{
+  "id": "bank-run",
+  "prompt": "explain how a bank run happens and why it can bring down a healthy bank",
+  "keyLinks": [
+    { "id": "K1", "required": true, "cause": "Banks lend out or invest most deposits", "effect": "Only a small part of deposits is available as cash at any moment", "mechanism": "Deposits can be withdrawn any time, but loans and investments pay back slowly" },
+    { "id": "K2", "required": true, "cause": "A rumour or bad news spreads", "effect": "Some depositors fear losing their money and withdraw", "mechanism": "Whoever withdraws first is more likely to get paid in full" },
+    { "id": "K3", "required": true, "cause": "Withdrawals exceed the cash on hand", "effect": "The bank must sell assets quickly, often at a loss", "mechanism": "Long-term assets can't be turned into cash fast without discounts" },
+    { "id": "K4", "required": true, "cause": "Visible withdrawals and losses", "effect": "More depositors panic and withdraw (reinforcing loop)", "mechanism": "Each withdrawal makes it more likely the bank runs out, so waiting looks riskier" },
+    { "id": "K5", "required": true, "cause": "The bank runs out of cash", "effect": "It can't pay depositors and fails, even if it was sound before", "mechanism": "A liquidity shortage, not initial insolvency, is enough to bring it down" },
+    { "id": "K6", "required": false, "cause": "Deposit insurance or central bank lending", "effect": "Depositors don't need to rush, which stops the loop", "mechanism": "If money is guaranteed, being first no longer matters" }
+  ],
+  "knownErrors": [
+    { "id": "E1", "claim": "Bank runs only happen to banks that have already lost the money / are insolvent", "why": "Runs can bring down solvent banks through lack of cash" },
+    { "id": "E2", "claim": "Banks keep all deposits in the vault", "why": "Most deposits are lent out or invested" },
+    { "id": "E3", "claim": "Withdrawals destroy money or make it disappear", "why": "The money moves to depositors; the bank's problem is running out of cash" },
+    { "id": "E4", "claim": "The panic loop is balancing / calms itself", "why": "Each withdrawal increases fear and further withdrawals: it is reinforcing" }
+  ],
+  "acceptableSimplifications": [
+    "Talking about \"cash in the vault\" instead of reserves",
+    "Omitting interbank markets and regulation details",
+    "Using a single bank as the whole story"
+  ]
+}
