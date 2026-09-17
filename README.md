@@ -122,9 +122,11 @@ eli5-flow/
 ├── .claude-plugin/
 │   ├── plugin.json         # plugin metadata
 │   └── marketplace.json    # makes this repo installable as a marketplace
+├── .github/workflows/      # CI: typecheck, tests, manifest check
+├── evals/                  # reference answers, grader and comparison scripts
 ├── scripts/
 │   ├── check-chain.ts      # structural checker for generated explainers
-│   └── check-chain.test.ts
+│   └── check-plugin.ts     # manifests and SKILL.md frontmatter
 └── skills/
     └── eli5-flow/
         ├── SKILL.md        # the skill: chain rules, page structure, chain data
@@ -159,10 +161,12 @@ Every explainer embeds its chain as JSON (`<script type="application/json" id="e
 
 ```bash
 node scripts/check-chain.ts path/to/explainer.html
-node --test scripts/check-chain.test.ts
+npm test            # unit tests for the checker and the scoring
+npm run typecheck
+npm run check:plugin  # manifests agree, every SKILL.md has name and description
 ```
 
-It checks **form, not truth**: a chain can pass and still be wrong about what causes what. That is what the evaluation below is for.
+The checker checks **form, not truth**: a chain can pass and still be wrong about what causes what. That is what the evaluation below is for. CI runs the type check, the unit tests and the manifest check on every push and pull request.
 
 ### Evaluating
 
